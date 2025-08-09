@@ -1,0 +1,69 @@
+{
+  "name": "send_email_generic",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "={{$env.WEBHOOK_PATH || 'send_email'}}",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "fc0d0920-2931-46e6-b052-4e6ffb2e8b73",
+      "name": "Webhook",
+      "webhookId": "REPLACE_WITH_WEBHOOK_ID"
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{$env.FROM_EMAIL}}",
+        "toEmail": "={{$json[\"body\"][\"to\"]}}",
+        "subject": "={{$env.EMAIL_SUBJECT || 'Message from chatbot'}}",
+        "emailFormat": "text",
+        "text": "={{$json[\"body\"][\"message\"]}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "8aafea20-3563-487d-bae6-a53fe514e744",
+      "name": "Send email",
+      "credentials": {
+        "smtp": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "REPLACE_WITH_VERSION_ID",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "REPLACE_WITH_WORKFLOW_ID",
+  "tags": []
+}
